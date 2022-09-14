@@ -1,0 +1,5 @@
+PORT=4000
+DB_URL_STR='mongodb+srv://ndMorsalin:JC8SmHrDD82OMKT1@cluster0.wbiew.mongodb.net/'
+JWT_SECRET='2C2p+IMA`#xj|kren~:;+,]0[DpGZ1uArfUm8IRDr!G2*$EU?d4(c88F^d)UC%Wm'
+COOKIES_SECRET='2C2p+IMA`#xj|kren~:;+,]0[DpGZ1uArfUm8IRDr!G2*$EU?d4(c88F^d)UC%Wm'
+COOKIES_EXPIRES='172800000'
