@@ -1,10 +1,11 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable no-unused-vars */
 const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const path = require('path');
-
+const cors = require('cors');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/userRoutes');
 const db = require('./db/db');
@@ -22,6 +23,14 @@ db();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIES_SECRET));
+
+// cors origin
+
+app.use(
+    cors({
+        origin: '*',
+    })
+);
 
 // static folder
 app.use(express.static(path.join(`${__dirname}/public`)));

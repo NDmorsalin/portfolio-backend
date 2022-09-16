@@ -9,6 +9,12 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        title: {
+            type: String,
+        },
+        subTitle: {
+            type: String,
+        },
         email: {
             type: String,
             required: true,
