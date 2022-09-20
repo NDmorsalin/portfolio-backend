@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
             select: false,
         },
         avatar: String,
-        designation: String,
+        designation: [String],
         aboutMe: String,
         thumpPic: String,
         skills: [

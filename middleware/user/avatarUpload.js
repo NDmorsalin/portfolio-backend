@@ -4,7 +4,7 @@ const singleFileUpload = require('../../utility/singleFileUpload');
 const avatarUpload = async (req, res, next) => {
     const upload = singleFileUpload(
         'avatar',
-        ['image/jpeg', 'image/jpg', 'image/png'],
+        ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'],
         400000,
         'Only .jpg, jpeg or .png format allowed!'
     );

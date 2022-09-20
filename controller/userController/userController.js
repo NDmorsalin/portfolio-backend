@@ -27,7 +27,7 @@ const getAdmin = catchAsyncError(async (req, res, next) => {
 // signup
 const signup = catchAsyncError(async (req, res, next) => {
     const hashPassword = await hashStr(req.body.password);
-    const avatar = `${req.hostname}:${process.env.PORT}/avatar/${req.files[0].filename}`;
+    const avatar = `${req.protocol}://${req.hostname}:${process.env.PORT}/avatar/${req.files[0].filename}`;
 
     const user = new User({
         ...req.body,
@@ -143,11 +143,11 @@ const updateUser = catchAsyncError(async (req, res, next) => {
     const thumpPicFile = req?.files?.find((file) => file.fieldname === 'thumpPic');
 
     const avatar = avatarFile
-        ? `${req.hostname}:${process.env.PORT}/avatar/${avatarFile.filename}`
+        ? `${req.protocol}://${req.hostname}:${process.env.PORT}/avatar/${avatarFile.filename}`
         : null;
 
     const thumpPic = thumpPicFile
-        ? `${req.hostname}:${process.env.PORT}/avatar/${thumpPicFile.filename}`
+        ? `${req.protocol}://${req.hostname}:${process.env.PORT}/avatar/${thumpPicFile.filename}`
         : null;
 
     const user = await User.findByIdAndUpdate(
