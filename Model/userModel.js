@@ -35,7 +35,13 @@ const userSchema = new mongoose.Schema(
                 progress: Number,
             },
         ],
-        familiarTech: [String],
+        familiarTech: [
+            {
+                techName: String,
+                techLink: String,
+                techIcon: String, // ? font awesome icons in react icon
+            },
+        ],
         education: [
             {
                 exam: String,

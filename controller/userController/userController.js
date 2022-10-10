@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable operator-linebreak */
 /* eslint-disable comma-dangle */
 /* eslint-disable no-unused-vars */
@@ -10,16 +11,19 @@ const User = require('../../Model/userModel');
 const { generateCookies } = require('../../utility/generateCookies');
 const hashStr = require('../../utility/hashStr');
 const sendEmail = require('../../utility/sendEmail');
+const AdminProject = require('../../Model/adminProjectModel');
 
 // ?complete
 // Log out
 const getAdmin = catchAsyncError(async (req, res, next) => {
     const admin = await User.findOne({ role: 'admin' });
+    const myProjects = await AdminProject.find({ user: admin._id }).skip(1);
 
     res.status(200).json({
         message: 'admin data',
         status: true,
         admin,
+        myProjects,
     });
 });
 
@@ -120,7 +124,7 @@ const updateUser = catchAsyncError(async (req, res, next) => {
     const id =
         req.user.role === 'admin' && req.originalUrl === '/api/v1/me/update'
             ? req.user.id
-            : req.params.id;
+            : req.originalUrl.includes('/api/v1/admin/user/') && req.params.id;
 
     const forUpdateUser =
         req.user.role === 'admin' && req.originalUrl === '/api/v1/me/update'
@@ -128,16 +132,21 @@ const updateUser = catchAsyncError(async (req, res, next) => {
             : await User.findById(id);
 
     // console.log(req.originalUrl === '/api/v1/me/update');
-    console.log({ forUpdateUser, id });
+
     /* //todo
      skills education socialLink coursesTraining
 
      are send object or array from front end
     */ //! todo
+    const { socialLink, skills, familiarTech } = req.body;
+
+    // todo  send data base saved data from front end
+    const familiarTechToSave =
+        familiarTech && familiarTech.length === 0 ? forUpdateUser.familiarTech : familiarTech;
+
+    const skillsToSave = skills && skills.length === 0 ? forUpdateUser.skills : skills;
 
     // todo send string from frontEnd
-    const familiarTech = req.body.familiarTech ? req.body.familiarTech.split(',') : null;
-
     // profile image and thump image
     const avatarFile = req?.files?.find((file) => file.fieldname === 'avatar');
     const thumpPicFile = req?.files?.find((file) => file.fieldname === 'thumpPic');
@@ -151,7 +160,7 @@ const updateUser = catchAsyncError(async (req, res, next) => {
         : null;
 
     const user = await User.findByIdAndUpdate(
-        req.user.id,
+        id,
         {
             $set: {
                 name: req.body.name || forUpdateUser.name,
@@ -159,11 +168,10 @@ const updateUser = catchAsyncError(async (req, res, next) => {
                 avatar: avatar || forUpdateUser.avatar,
                 aboutMe: req.body.aboutMe || forUpdateUser.aboutMe,
                 thumpPic: thumpPic || forUpdateUser.thumpPic,
-                familiarTech: familiarTech || forUpdateUser.familiarTech,
-                // todo wait for front end
-                skills: forUpdateUser.skills,
+                familiarTech: familiarTechToSave,
+                skills: skillsToSave,
                 education: forUpdateUser.education,
-                socialLink: forUpdateUser.socialLink,
+                socialLink: socialLink || forUpdateUser.socialLink,
                 coursesTraining: forUpdateUser.coursesTraining,
             },
         },

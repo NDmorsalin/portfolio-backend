@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const User = require('./userModel');
 
-const projectSchema = new mongoose.Schema({
+const adminProjectSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -20,7 +21,8 @@ const projectSchema = new mongoose.Schema({
     dependencyTech: [String],
     imageOrVideoLink: String,
     extraNote: String,
+    user: { type: mongoose.Schema.Types.ObjectId, ref: User },
 });
 
-const Project = mongoose.model('Project', projectSchema);
-module.exports = Project;
+const AdminProject = mongoose.model('AdminProject', adminProjectSchema);
+module.exports = AdminProject;

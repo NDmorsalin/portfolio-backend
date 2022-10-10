@@ -7,7 +7,8 @@ const logger = require('morgan');
 const path = require('path');
 const cors = require('cors');
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/userRoutes');
+const adminRouter = require('./routes/adminRoutes');
+const adminProjectsRouter = require('./routes/adminProjectsRouter');
 const db = require('./db/db');
 const deleteFile = require('./utility/deleteFile');
 
@@ -37,7 +38,8 @@ app.use(express.static(path.join(`${__dirname}/public`)));
 
 // router
 app.use('/api/v1/', indexRouter);
-app.use('/api/v1/', usersRouter);
+app.use('/api/v1/', adminRouter);
+app.use('/api/v1/', adminProjectsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

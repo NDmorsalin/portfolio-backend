@@ -1,13 +1,13 @@
 const express = require('express');
 const {
-    allProject,
+    allProjects,
     createProject,
     getSingleProject,
     updateProject,
     deleteProject,
-} = require('../controller/projectController/projectController');
+} = require('../controller/projectController/adminProjectController');
 const { auth, authenticateRole } = require('../middleware/common/auth');
-const avatarUpload = require('../middleware/user/avatarUpload');
+const adminProjectsImgUpload = require('../middleware/project/adminProjectsImgUpload');
 
 const router = express.Router();
 
@@ -15,12 +15,12 @@ const router = express.Router();
 
 // get all project --admin
 router
-    .route('/admin/project')
-    .get(auth, authenticateRole('admin'), allProject)
-    .post(auth, authenticateRole('admin'), avatarUpload, createProject);
+    .route('/admin/adminProjects')
+    .get(auth, authenticateRole('admin'), allProjects)
+    .post(auth, authenticateRole('admin'), adminProjectsImgUpload, createProject);
 
 router
-    .route('/admin/project/:id')
+    .route('/admin/adminProject/:id')
     .get(auth, authenticateRole('admin'), getSingleProject)
     .put(auth, authenticateRole('admin'), updateProject) // --admin
     .delete(auth, authenticateRole('admin'), deleteProject);
