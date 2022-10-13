@@ -1,0 +1,3 @@
+function quarryProjects() {
+    class quarry {}
+}

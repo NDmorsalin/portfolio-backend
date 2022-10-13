@@ -9,6 +9,12 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        title: {
+            type: String,
+        },
+        subTitle: {
+            type: String,
+        },
         email: {
             type: String,
             required: true,
@@ -20,7 +26,7 @@ const userSchema = new mongoose.Schema(
             select: false,
         },
         avatar: String,
-        designation: String,
+        designation: [String],
         aboutMe: String,
         thumpPic: String,
         skills: [
@@ -29,7 +35,13 @@ const userSchema = new mongoose.Schema(
                 progress: Number,
             },
         ],
-        familiarTech: [String],
+        familiarTech: [
+            {
+                techName: String,
+                techLink: String,
+                techIcon: String, // ? font awesome icons in react icon
+            },
+        ],
         education: [
             {
                 exam: String,
