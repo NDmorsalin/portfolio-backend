@@ -30,7 +30,7 @@ const getAdmin = catchAsyncError(async (req, res, next) => {
 // ?complete
 // signup
 const signup = catchAsyncError(async (req, res, next) => {
-const hashPassword = await hashStr(req.body.password);
+  const hashPassword = await hashStr(req.body.password);
   //const avatar = `${req.protocol}://${req.hostname}:${process.env.PORT}/avatar/${req.files[0].filename}`;
   console.log({files:req.files});
   const user = new User({
