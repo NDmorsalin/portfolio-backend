@@ -28,11 +28,11 @@ const getAdmin = catchAsyncError(async (req, res, next) => {
 const signup = catchAsyncError(async (req, res, next) => {
     const hashPassword = await hashStr(req.body.password);
     const avatar = `${req.hostname}:${process.env.PORT}/avatar/${req.files[0].filename}`;
-
+console.log({avatar,file:req.files})
     const user = new User({
         ...req.body,
         password: hashPassword,
-        avatar,
+        
     });
     await user.save();
     const token = await generateCookies(res, user.id);
